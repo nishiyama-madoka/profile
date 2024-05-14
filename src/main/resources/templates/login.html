@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="https://www.thymeleaf.org"
+xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Sign in</title>
+<meta http-equiv="Content-Type"
+content="text/html; charset=UTF-8">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link th:href="@{css/login.css}" rel="stylesheet" type="text/css" >
+</head>
+
+<body>
+	
+	<header>
+			<p>My Portfolio</p>
+	</header>
+	
+	<h3>ログイン</h3>
+	
+	<form th:action="@{/login}" method="post">
+		<div class="input">
+			<label class="mail">メールアドレス</label>
+			<div class="text"><input type="text" class="input" name="email"/></div>
+		</div>
+		
+		<div class="input">
+			<label class="pass">パスワード</label>
+			<div class="text"><input type="password" class="input" name="password"/></div>
+		</div>
+		<div class="btn">
+			<input type="submit" value="ログインする" class="btn-blue login" />
+			
+		</div>
+				
+		<div class="btn">
+			<button onclick="location.href='login'" class="btn-blue" >新規登録する</button>
+		</div>
+		
+	</form>
+
+	<footer>
+		<p>portfolio site</p>
+	</footer>
+	
+</body>
+</html>
