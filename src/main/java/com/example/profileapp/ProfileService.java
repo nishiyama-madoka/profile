@@ -22,6 +22,8 @@ public class ProfileService {
      * @param userAddRequest リクエストデータ
      */
     public void save(UserAddRequest userAddRequest) {
+    	String encodedPassword = passwordEncoder.encode(userAddRequest.getPassword());
+        userAddRequest.setPassword(encodedPassword);
         userInfoMapper.save(userAddRequest);
     }
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,11 +12,8 @@ import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class AppController {
@@ -34,6 +31,7 @@ public class AppController {
 	     
 	        return "/top";
 	    }
+	 
 	 
 	 @GetMapping(value = "/login")
 	 public String displaylogin() {
@@ -59,28 +57,25 @@ public class AppController {
      return "redirect:/top"; //トップ画面へ遷移するように変更
 	 }
 	 
-	  
-	 //ログインエラー
-	 @RequestMapping("/login")
-	 	 @PreAuthorize("permitAll")
-	 	 public ModelAndView login(ModelAndView mav,
-	 			 @RequestParam(value="error", required=false)String error) {
-	 		 mav.setViewName("login");
-	 		 System.out.println(error);
-	 		 if (error != null) {
-	 			 mav.addObject("msg", "メールアドレス、もしくはパスワードが間違っています");
-	 		 } else {
-	 			 mav.addObject("/top");
-	 		 }
-	 		 return mav;
-	 }
+	 protected void configure(HttpSecurity http) throws Exception {
+		    http
+		      .authorizeRequests().requestMatchers("/login", "/signin").permitAll().anyRequest().authenticated()
+		      .and()
+		      .formLogin().loginPage("/login")
+		      .defaultSuccessUrl("/top")
+		      .usernameParameter("email")  //usernameの値を"email"から取得するよう設定する
+		      .passwordParameter("password")
+		      .and()
+		      .rememberMe();
+		  }
+
 	 
+
+	    @RequestMapping("/top")
+	    public String success() {
+	        return "top";
+	    }
 	 
-	 
-	 @PostMapping
-	 String postLogin() {
-		 return "/top";
-	 }
-	 
+	    
 }
 

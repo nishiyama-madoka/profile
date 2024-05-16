@@ -8,6 +8,17 @@
         INSERT INTO users
             (email, name, password, created_at, updated_at)
         VALUES
-            (#{email}, #{name}, #{password},CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP)
+            (#{email}, #{name}, #{password}, CURRENT_TIMESTAMP,  CURRENT_TIMESTAMP)
     </insert>
+    
+    
+    <select id="getAccount" resultType="com.example.profileapp.Person">
+        SELECT
+            email,
+            password
+         FROM
+            users
+         WHERE
+            email = #{email}   
+    </select>
    </mapper>
