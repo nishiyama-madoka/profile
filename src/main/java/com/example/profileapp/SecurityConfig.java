@@ -28,13 +28,19 @@ public class SecurityConfig  {
 	throws Exception {
 		http.csrf().disable();
 		http.authorizeHttpRequests(authorize -> {
-			authorize.anyRequest().permitAll();
+			authorize
+			.requestMatchers("/").permitAll()
+			.requestMatchers("/js/**").permitAll()
+			.requestMatchers("/css/**").permitAll()
+			.requestMatchers("/img/**").permitAll()
+			.requestMatchers("/signin").permitAll()
+			.requestMatchers("/login").permitAll()
+			.anyRequest().authenticated();
 		});
 		http.formLogin(form -> {
 			form
-			.usernameParameter("email")
-			.passwordParameter("password")
-			.defaultSuccessUrl("/top")
+			
+			.defaultSuccessUrl("/top",true)
 			.loginPage("/login");
 		});
 		return http.build();
