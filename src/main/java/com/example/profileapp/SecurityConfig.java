@@ -69,7 +69,7 @@ public void configAuthentication(AuthenticationManagerBuilder auth) throws Excep
     auth.jdbcAuthentication()
             .dataSource(dataSource)
             .usersByUsernameQuery(
-                    "select email, password, self_introduction from users where email = ?")
+                    "select email, password,enable from users where email = ?")
             .authoritiesByUsernameQuery(
                     "select password, email from users where email = ?")
             .passwordEncoder(new BCryptPasswordEncoder());
