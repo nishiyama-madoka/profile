@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,7 +15,6 @@ import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableMethodSecurity
 @EnableWebSecurity
 
 public class SecurityConfig  {
@@ -35,19 +33,27 @@ public class SecurityConfig  {
 			.requestMatchers("/img/**").permitAll()
 			.requestMatchers("/signin").permitAll()
 			.requestMatchers("/login").permitAll()
+			.requestMatchers("/top").permitAll()
 			.anyRequest().authenticated();
 		});
-		http.formLogin(form -> {
-			form
-			
+		http.formLogin((login) -> {
+			login
+			//ログイン時使用するデータ
+			.usernameParameter("email")
+			.passwordParameter("password")
+			//ログインページ
+			.loginPage("/login")
+			//ログイン実行ページ
+			.loginProcessingUrl("/login")
+			//ログイン失敗時ページ
+			.failureUrl("/login?error")
+			//ログイン成功時遷移ページ
 			.defaultSuccessUrl("/top",true)
-			.loginPage("/login");
+			//アクセス権
+			.permitAll();
 		});
 		return http.build();
 	}
-	
-	
-
 	
 	@Autowired
 	private DataSource dataSource;
@@ -73,6 +79,9 @@ public void configAuthentication(AuthenticationManagerBuilder auth) throws Excep
 public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
 }
+	
+
+
 }
 
 //@Autowired

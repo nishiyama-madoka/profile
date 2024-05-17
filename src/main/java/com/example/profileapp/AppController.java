@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+@RequestMapping("/")
 @Controller
 public class AppController {
+	
 	@Autowired
 	private ProfileService profileService;
+	
 	//新規登録画面
 	@GetMapping(value = "/signin")
 	public String displayAdd(Model model) {
@@ -32,12 +35,6 @@ public class AppController {
 	        return "/top";
 	    }
 	 
-	 
-	 @GetMapping(value = "/login")
-	 public String displaylogin() {
-		 return "/login";
-	 }
-	
 	 
 	 @RequestMapping(value = "/signin", method = RequestMethod.POST)
 	    public String create(@Validated @ModelAttribute UserAddRequest userRequest, BindingResult result, Model model) {
@@ -69,12 +66,12 @@ public class AppController {
 		      .rememberMe();
 		  }
 
-	 
+	 @RequestMapping("/login")
+	 public String displaylogin() {
+		 return "/login";
+	 }
 
-	    @RequestMapping("/top")
-	    public String success() {
-	        return "top";
-	    }
+	   
 	 
 	    
 }

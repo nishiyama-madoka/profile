@@ -28,16 +28,32 @@ public class Person implements Serializable {
 	
 	private Date updated_at;
 	
-	 private boolean enabled;
+	public String getEmail() {
+		return email;
+	}
 	
-	public record UserAccount(String email,String password,String name) {}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	
-	public boolean isEnabled() {
-        return enabled;
-    }
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	// private boolean enabled;
+	
+	//public record UserAccount(String email,String password,String name) {}
+	
+	//public boolean isEnabled() {
+        //return enabled;
+    //}
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
+    //public void setEnabled(boolean enabled) {
+        //this.enabled = enabled;
+    //}
 }
 
