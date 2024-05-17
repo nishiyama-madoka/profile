@@ -1,10 +1,10 @@
 package com.example.profileapp;
 
 
+import java.util.List;
+
 //import org.apache.catalina.User;
 import org.apache.ibatis.annotations.Mapper;
-
-import com.example.profileapp.Person.UserAccount;
 
 @Mapper
 public interface ProfileMapper {
@@ -16,6 +16,10 @@ public interface ProfileMapper {
     void save(UserAddRequest userRequest);
     
     //public User findByName(String name);
+    List<Person> findAll();
 	
-    public UserAccount getAccount(String email);
+	Person findById(Long id);
+	
+	
+    public Person findByEmail(String email);
 }

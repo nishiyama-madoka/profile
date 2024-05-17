@@ -19,6 +19,6 @@
          FROM
             users
          WHERE
-            email = #{email}   
+            id = #{id}   
     </select>
    </mapper>

@@ -2,11 +2,11 @@ package com.example.profileapp;
 
 import java.util.Optional;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-@Mapper
-public interface UserRepository {
-	@Select("select email,password from users where email = #{email}")
+@Repository
+public interface UserRepository extends CrudRepository<Person, Long> {
+	
     Optional<Person> findByEmail(String email);
 }
